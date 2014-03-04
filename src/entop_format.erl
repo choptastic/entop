@@ -40,11 +40,15 @@
 init(Node) ->
     Columns = [{"Pid", 12, [{align, right}]},
 	       {"Registered Name", 20, []},
-	       {"Reductions", 12, []},
+	       {"Reductions", 14, []},
 	       {"MQueue", 6, []},
 	       {"HSize", 6, []},
 	       {"SSize", 6, []},
-	       {"HTot", 6, []}],
+	       {"HTot", 6, []},
+		   {"Current MFA",20, []},
+		   {"Status",15, []},
+	   	   {"Stacktrace", 70, []}],
+
     {ok, {Columns, 3}, #state{ node = Node }}.
 
 %% Header Callback
@@ -86,12 +90,20 @@ row(ProcessInfo, State) ->
 		  Name ->
 		      atom_to_list(Name)
 	      end,
+	CurrentFunction = format_mfa(proplists:get_value(current_function,ProcessInfo, 0)),
+	Status = proplists:get_value(status, ProcessInfo, 0),
+	Stacktrace = io_lib:format("~p",[proplists:get_value(current_stacktrace, ProcessInfo, 0)]),
     Reductions = proplists:get_value(reductions, ProcessInfo, 0),
     Queue = proplists:get_value(message_queue_len, ProcessInfo, 0),
     Heap = proplists:get_value(heap_size, ProcessInfo, 0),
     Stack = proplists:get_value(stack_size, ProcessInfo, 0),
     HeapTot = proplists:get_value(total_heap_size, ProcessInfo, 0),
-    {ok, {Pid, RegName, Reductions, Queue, Heap, Stack, HeapTot}, State}.
+    {ok, {Pid, RegName, Reductions, Queue, Heap, Stack, HeapTot, CurrentFunction, Status, Stacktrace}, State}.
+
+format_mfa({M, F, A}) ->
+	io_lib:format("~p:~p/~p",[M, F, A]);
+format_mfa(_) ->
+	"unknown".
 
 mem2str(Mem) ->
     if Mem > ?GIB -> io_lib:format("~.1fm",[Mem/?MIB]);
