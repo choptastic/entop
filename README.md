@@ -30,19 +30,26 @@ To run entop make sure you have Erlang installed, cecho and entop libraries inst
 entop's interface can be customized so this section only applies for the "built-in" interface.
 
 #### Headers
-**First row** shows information about the node which is more or less static such as the node name the operating system, erl flags and erlang version it is running.
-**Second row** shows information on what the local time is (according to the node), how long it has been up for (Days:Hours:Minutes:Seconds) and how much latency there is to the node I.e. how long a net_adm:ping() takes.
-**Third row** shows information about the processes of the system; the total number of processes, the run queue (number of processes scheduled to run by the scheduler(s)), the reductions per interval (RpI) which shows how many reductions the system has made since it last called the node.
-**Fourth row** shows how much process memory is being used and the total amount.
-**Fifth row** shows how much system memory, atom memory (currently used/total allocated), binary memory, code memory and ets memory.
-**Sixth row** is left blank and is reserved for now.
-**Seventh row** shows information about the rows in the list such as the interval in which the information is fetched, what the list is sorted on and how long it took to retrieve the information.
+##### First row
+Shows information about the node which is more or less static such as the node name the operating system, erl flags and erlang version it is running.
+##### Second row
+Shows information on what the local time is (according to the node), how long it has been up for (Days:Hours:Minutes:Seconds) and how much latency there is to the node I.e. how long a net_adm:ping() takes.
+##### Third row
+Shows information about the processes of the system; the total number of processes, the run queue (number of processes scheduled to run by the scheduler(s)), the reductions per interval (RpI) which shows how many reductions the system has made since it last called the node.
+##### Fourth row
+Shows how much process memory is being used and the total amount.
+##### Fifth row
+Shows how much system memory, atom memory (currently used/total allocated), binary memory, code memory and ets memory.
+##### Sixth row
+Is left blank and is reserved for now.
+##### Seventh row
+Shows information about the rows in the list such as the interval in which the information is fetched, what the list is sorted on and how long it took to retrieve the information.
 
 ### Commands when running entop:
 
-[1-N]:
-  Sort on column number 1 through N. Starts with first column (1) and up to N
-  where N is the last column.
+[0-9]:
+  Sort on column number 0 through 9. Starts with first column (0)
+  and up to the last column (9).
 
 r:
   Toggles the sorting order from ascending to descending and vice versa.
@@ -54,7 +61,8 @@ Ctrl-C:
   Same as 'q'.
 
 '<' and '>':
-  Moves the sorting column to the left or right respectively (these are the lower/greater-than-tags; not arrow keys).
+  Moves the sorting column to the left or right respectively
+  (these are the lower/greater-than-tags; not arrow keys).
 
 ### GProc Support
 
